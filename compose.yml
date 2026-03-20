@@ -1,0 +1,9 @@
+services:
+  mail-janitor:
+    build: .
+    container_name: mail-janitor
+    ports:
+      - "127.0.0.1:8088:80"
+    volumes:
+      - ./storage:/storage
+    restart: unless-stopped
