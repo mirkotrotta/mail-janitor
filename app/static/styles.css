@@ -1,0 +1,173 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f7fb;
+  --panel: #ffffff;
+  --border: #d9e1ea;
+  --text: #18222d;
+  --muted: #5e6b77;
+  --accent: #0f766e;
+  --ok-bg: #e9f8f1;
+  --ok-text: #0b5f44;
+  --err-bg: #fdecec;
+  --err-text: #8a1b1b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #eef5fb 0%, var(--bg) 30%, var(--bg) 100%);
+  color: var(--text);
+  font-family: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+}
+
+.site-header {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: #ffffff;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.site-header p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 1rem auto;
+  padding: 0 1rem 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.form-grid h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 0.55rem 0.65rem;
+}
+
+button {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.92;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox input {
+  width: auto;
+}
+
+.account-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.inline-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.inline-actions form {
+  margin: 0;
+}
+
+.alert {
+  border-radius: 10px;
+  padding: 0.75rem;
+  border: 1px solid transparent;
+}
+
+.alert.success {
+  background: var(--ok-bg);
+  color: var(--ok-text);
+  border-color: #b9e7d2;
+}
+
+.alert.error {
+  background: var(--err-bg);
+  color: var(--err-text);
+  border-color: #f3c3c3;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  padding: 0.5rem;
+  vertical-align: top;
+}
+
+td ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+.run-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.4rem 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.run-meta p {
+  margin: 0;
+}

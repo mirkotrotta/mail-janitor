@@ -1,0 +1,127 @@
+<form action="/accounts/save" method="post" class="form-grid">
+  <h3>Add account</h3>
+
+  <label>
+    Label
+    <input type="text" name="label" placeholder="Personal Gmail" required />
+  </label>
+
+  <label>
+    Provider
+    <select name="provider" id="new-provider" onchange="applyProviderPreset('new')" required>
+      {% for provider in provider_options %}
+        <option value="{{ provider }}">{{ provider }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>
+    Host
+    <input type="text" name="host" id="new-host" value="imap.gmail.com" placeholder="imap.gmail.com" />
+  </label>
+
+  <label>
+    Port
+    <input type="number" name="port" id="new-port" min="1" max="65535" value="993" />
+  </label>
+
+  <label class="checkbox">
+    <input type="checkbox" name="use_ssl" id="new-ssl" checked />
+    Use SSL
+  </label>
+
+  <label>
+    Username
+    <input type="text" name="username" placeholder="you@example.com" required />
+  </label>
+
+  <label>
+    Password / App Password
+    <input type="password" name="password" autocomplete="new-password" required />
+  </label>
+
+  <button type="submit">Save account</button>
+</form>
+
+{% if accounts %}
+  <h3>Saved accounts</h3>
+  {% for account in accounts %}
+    <div class="account-card">
+      <form action="/accounts/save" method="post" class="form-grid">
+        <input type="hidden" name="account_id" value="{{ account.id }}" />
+
+        <label>
+          Label
+          <input type="text" name="label" value="{{ account.label }}" required />
+        </label>
+
+        <label>
+          Provider
+          <select
+            name="provider"
+            id="account-{{ account.id }}-provider"
+            onchange="applyProviderPreset('account-{{ account.id }}')"
+            required
+          >
+            {% for provider in provider_options %}
+              <option value="{{ provider }}" {% if provider == account.provider %}selected{% endif %}>
+                {{ provider }}
+              </option>
+            {% endfor %}
+          </select>
+        </label>
+
+        <label>
+          Host
+          <input type="text" name="host" id="account-{{ account.id }}-host" value="{{ account.host }}" required />
+        </label>
+
+        <label>
+          Port
+          <input
+            type="number"
+            name="port"
+            id="account-{{ account.id }}-port"
+            min="1"
+            max="65535"
+            value="{{ account.port }}"
+            required
+          />
+        </label>
+
+        <label class="checkbox">
+          <input
+            type="checkbox"
+            name="use_ssl"
+            id="account-{{ account.id }}-ssl"
+            {% if account.use_ssl %}checked{% endif %}
+          />
+          Use SSL
+        </label>
+
+        <label>
+          Username
+          <input type="text" name="username" value="{{ account.username }}" required />
+        </label>
+
+        <label>
+          Password / App Password (leave blank to keep existing)
+          <input type="password" name="password" autocomplete="new-password" value="" />
+        </label>
+
+        <button type="submit">Save changes</button>
+      </form>
+
+      <div class="inline-actions">
+        <form action="/accounts/{{ account.id }}/test" method="post">
+          <button type="submit">Test IMAP connection</button>
+        </form>
+        <form action="/scans/{{ account.id }}/run" method="post">
+          <button type="submit">Scan INBOX (cap {{ scan_cap_default }})</button>
+        </form>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No accounts yet.</p>
+{% endif %}

@@ -1,0 +1,59 @@
+{% if selected_run %}
+  <div class="run-meta">
+    <p><strong>Run ID:</strong> {{ selected_run.id }}</p>
+    <p><strong>Account:</strong> {{ selected_run.account_label }}</p>
+    <p><strong>Status:</strong> {{ selected_run.status }}</p>
+    <p><strong>Scan cap:</strong> {{ selected_run.scan_cap }}</p>
+    <p><strong>Messages scanned:</strong> {{ selected_run.scanned_count }}</p>
+    <p><strong>Started:</strong> {{ selected_run.started_at }}</p>
+    <p><strong>Finished:</strong> {{ selected_run.finished_at or "-" }}</p>
+    {% if selected_run.error_message %}
+      <p><strong>Error:</strong> Scan failed</p>
+    {% endif %}
+  </div>
+
+  {% if sender_stats %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Sender Email</th>
+            <th>Sender Domain</th>
+            <th>Count</th>
+            <th>Oldest Date</th>
+            <th>Newest Date</th>
+            <th>Unsubscribe Header</th>
+            <th>Sample Subjects</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in sender_stats %}
+            <tr>
+              <td>{{ row.sender_email }}</td>
+              <td>{{ row.sender_domain }}</td>
+              <td>{{ row.message_count }}</td>
+              <td>{{ row.oldest_date or "-" }}</td>
+              <td>{{ row.newest_date or "-" }}</td>
+              <td>{{ "yes" if row.unsubscribe_header_present else "no" }}</td>
+              <td>
+                {% if row.sample_subjects %}
+                  <ul>
+                    {% for subject in row.sample_subjects %}
+                      <li>{{ subject }}</li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>This run has no sender aggregates.</p>
+  {% endif %}
+{% else %}
+  <p>No scan runs yet. Save an account and run your first read-only INBOX scan.</p>
+{% endif %}

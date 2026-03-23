@@ -3,5 +3,4 @@ uvicorn[standard]
 jinja2
 python-multipart
 imap-tools
-sqlmodel
-aiosqlite
+cryptography

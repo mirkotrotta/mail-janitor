@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if message %}
+    <div class="alert success">{{ message }}</div>
+  {% endif %}
+  {% if error %}
+    <div class="alert error">{{ error }}</div>
+  {% endif %}
+
+  <section class="panel">
+    <h2>Accounts</h2>
+    {% include "partials/account_form.html" %}
+  </section>
+
+  <section class="panel">
+    <h2>Scan Review</h2>
+    {% include "partials/scan_results.html" %}
+  </section>
+
+  <script>
+    const providerPresets = {{ provider_presets | safe }};
+
+    function applyProviderPreset(formIdPrefix) {
+      const provider = document.getElementById(`${formIdPrefix}-provider`);
+      const host = document.getElementById(`${formIdPrefix}-host`);
+      const port = document.getElementById(`${formIdPrefix}-port`);
+      const ssl = document.getElementById(`${formIdPrefix}-ssl`);
+      const preset = providerPresets[provider.value];
+
+      if (!preset) {
+        return;
+      }
+
+      host.value = preset.host;
+      port.value = preset.port;
+      ssl.checked = !!preset.use_ssl;
+    }
+  </script>
+{% endblock %}
